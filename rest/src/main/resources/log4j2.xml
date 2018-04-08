@@ -32,10 +32,16 @@
         </Cassandra>
     </Appenders>
     <Loggers>
+        <Root>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="CassandraDefault"/>
+        </Root>
+        <!--
         <Logger name="defaultLogger">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="CassandraDefault"/>
         </Logger>
+        -->
         <Logger name="ruleLogger">
             <AppenderRef ref="CassandraRules"/>
         </Logger>
