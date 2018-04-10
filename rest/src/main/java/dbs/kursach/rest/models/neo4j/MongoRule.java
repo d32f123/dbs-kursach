@@ -16,4 +16,17 @@ public class MongoRule extends Condition {
     public void setMongoId(Long mongoId) {
         this.mongoId = mongoId;
     }
+
+    @Override
+    public void appendSubCondition(Condition condition) {
+        throw new IllegalArgumentException("No subrules allowed");
+    }
+
+    @Override
+    public String validate() {
+        if (this.mongoId == 0) {
+            return "Invalid mongo id";
+        }
+        return super.validate();
+    }
 }

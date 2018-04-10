@@ -3,6 +3,7 @@ package dbs.kursach.rest.models.neo4j;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
 
 @NodeEntity(label = "CompoundRule")
 public class CompoundRule extends Condition {
@@ -11,8 +12,6 @@ public class CompoundRule extends Condition {
     private String title;
     @Property
     private String description;
-    @Relationship(type = "CONDITIONS")
-    private Condition condition;
 
     public CompoundRule() {}
 
@@ -32,12 +31,19 @@ public class CompoundRule extends Condition {
         this.description = description;
     }
 
-    public Condition getCondition() {
-        return condition;
+    @Override
+    public void appendSubCondition(Condition condition) {
+        if (this.getSubConditions() != null && this.getSubConditions().size() > 0)
+            throw new IllegalArgumentException("Only 1 subrule is allowed");
+        super.appendSubCondition(condition);
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    @Override
+    public String validate() {
+        if (this.title == null || this.title.length() < 1) {
+            return "Compound rule title is invalid";
+        }
+        return super.validate();
     }
 
 }

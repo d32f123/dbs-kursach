@@ -36,7 +36,7 @@ public class RestApplication {
             sb.append(tab).append("Type: Compound\n")
                     .append(tab).append("Title: ").append(compRule.getTitle())
                     .append("\n").append(tab).append("Description: ").append(compRule.getDescription())
-                    .append("\n").append(tab).append("Condition: {\n").append(conditionToString(compRule.getCondition(), depth + 1))
+                    .append("\n").append(tab).append("Condition: {\n").append(conditionToString(compRule.getSubConditions().get(0), depth + 1))
                     .append(tab).append("}\n");
         }
         else if (rule instanceof BooleanRule) {
@@ -72,9 +72,12 @@ public class RestApplication {
 
             log.info("Trying out rule repository");
 
-            CompoundRule rule = ruleRepository.findByTitle("root");
+            CompoundRule rule = ruleRepository.findByTitle("root").orElse(null);
 
-            log.info(conditionToString(rule, 0));
+            if (rule != null)
+                log.info(conditionToString(rule, 0));
+            else
+                log.info("root empty");
         };
     }
 }

@@ -2,10 +2,10 @@ package dbs.kursach.rest.repositories.neo4j;
 
 import dbs.kursach.rest.models.neo4j.CompoundRule;
 import org.springframework.data.neo4j.annotation.Depth;
-import org.springframework.data.repository.CrudRepository;
 
-public interface CompoundRuleRepository extends CrudRepository<CompoundRule, Long> {
+import java.util.Optional;
 
+public interface CompoundRuleRepository extends ConditionBaseRepository<CompoundRule> {
     @Depth(-1)
-    CompoundRule findByTitle(String title);
+    Optional<CompoundRule> findByTitle(String title);
 }
