@@ -1,6 +1,7 @@
 package dbs.kursach.rest.controllers.neo4j;
 
 import com.mongodb.Mongo;
+import dbs.kursach.rest.models.mongo.Rule;
 import dbs.kursach.rest.models.neo4j.BooleanRule;
 import dbs.kursach.rest.models.neo4j.CompoundRule;
 import dbs.kursach.rest.models.neo4j.Condition;
@@ -8,7 +9,7 @@ import dbs.kursach.rest.models.neo4j.MongoRule;
 import dbs.kursach.rest.repositories.neo4j.BooleanRuleRepository;
 import dbs.kursach.rest.repositories.neo4j.CompoundRuleRepository;
 import dbs.kursach.rest.repositories.neo4j.ConditionRepository;
-import dbs.kursach.rest.repositories.neo4j.MongoRuleRepository;
+import dbs.kursach.rest.repositories.mongo.RuleRepository;
 import org.neo4j.driver.v1.exceptions.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +23,18 @@ public class CompoundRuleController {
 
     private final CompoundRuleRepository compoundRuleRepository;
     private final ConditionRepository conditionRepository;
-    private final MongoRuleRepository mongoRuleRepository;
+    private final RuleRepository ruleRepository;
     private final BooleanRuleRepository booleanRuleRepository;
 
     @Autowired
     CompoundRuleController(
             ConditionRepository conditionRepository,
             CompoundRuleRepository compoundRuleRepository,
-            MongoRuleRepository mongoRuleRepository,
+            RuleRepository ruleRepository,
             BooleanRuleRepository booleanRuleRepository) {
         this.conditionRepository = conditionRepository;
         this.compoundRuleRepository = compoundRuleRepository;
-        this.mongoRuleRepository = mongoRuleRepository;
+        this.ruleRepository = ruleRepository;
         this.booleanRuleRepository = booleanRuleRepository;
     }
 
@@ -41,7 +42,9 @@ public class CompoundRuleController {
         if (cond instanceof CompoundRule) {
             return this.compoundRuleRepository.save((CompoundRule)cond);
         } else if (cond instanceof MongoRule) {
-            return this.mongoRuleRepository.save((MongoRule)cond);
+            // TODO: сам разбирайся
+            this.ruleRepository.save(new Rule());
+            return new Condition();
         } else if (cond instanceof BooleanRule) {
             return this.booleanRuleRepository.save((BooleanRule)cond);
         } else {
