@@ -12,6 +12,8 @@ import dbs.kursach.rest.repositories.neo4j.ConditionRepository;
 import dbs.kursach.rest.repositories.mongo.RuleRepository;
 import org.neo4j.driver.v1.exceptions.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -148,9 +150,13 @@ public class CompoundRuleController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    Collection<CompoundRule> readAllCompoundRules() {
+    Collection<CompoundRule> readAllCompoundRules(
+            @RequestParam(defaultValue = "0", name = "page") int pageNumber,
+            @RequestParam(defaultValue = "25", name = "size") int pageSize
+    ) {
         List<CompoundRule> list = new ArrayList<>();
-        Iterable<CompoundRule> iterable = this.compoundRuleRepository.findAll();
+
+        Iterable<CompoundRule> iterable = this.compoundRuleRepository.findAll(new PageRequest(pageNumber, pageSize));
         iterable.forEach(list::add);
         return list;
     }

@@ -1,7 +1,6 @@
 package dbs.kursach.rest.controllers.neo4j;
 
 import dbs.kursach.rest.models.neo4j.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.UUID;
@@ -94,5 +93,3 @@ public class ConditionRequest {
         }
     }
 }
-
-enum ConditionType { BOOLEAN, COMPOUND, MONGO, UNKNOWN }
