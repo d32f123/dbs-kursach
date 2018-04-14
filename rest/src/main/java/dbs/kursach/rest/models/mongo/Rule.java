@@ -8,6 +8,7 @@ public class Rule {
     private String id;
     private String type;
     private String descr;
+    private String objectId;
     private String regexp;
     private String plainCode;
     private String errorMsg;
@@ -58,5 +59,13 @@ public class Rule {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 }

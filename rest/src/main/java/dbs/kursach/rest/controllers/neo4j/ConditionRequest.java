@@ -12,7 +12,7 @@ public class ConditionRequest {
     private String title = null;
     private String description = null;
     private BoolType boolType = BoolType.UNKNOWN;
-    private Long mongoId = 0L;
+    private String mongoId = "";
 
     public ConditionRequest() {
     }
@@ -57,11 +57,11 @@ public class ConditionRequest {
         this.boolType = boolType;
     }
 
-    public Long getMongoId() {
+    public String getMongoId() {
         return mongoId;
     }
 
-    public void setMongoId(Long mongoId) {
+    public void setMongoId(String mongoId) {
         this.mongoId = mongoId;
     }
 
@@ -81,7 +81,7 @@ public class ConditionRequest {
                 rule.setUuid(this.uuid);
             rule.setSubConditions(this.subConditions);
             return rule;
-        } else if (mongoId != -1L) {
+        } else if (mongoId.length() != 0) {
             MongoRule rule = new MongoRule();
             rule.setMongoId(this.mongoId);
             if (useUuid)

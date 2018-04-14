@@ -1,9 +1,9 @@
 package dbs.kursach.rest.models.mongo;
 
-import dbs.kursach.rest.models.mongo.Rule;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +16,7 @@ public class Response {
     @Id
     private String id;
     private boolean passed;
+    private Date date;
 
     public List<Rule> getRules() {
         return rules;
@@ -39,5 +40,13 @@ public class Response {
 
     public void setPassed(boolean passed) {
         this.passed = passed;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

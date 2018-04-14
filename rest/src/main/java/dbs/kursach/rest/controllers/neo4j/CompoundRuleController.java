@@ -10,6 +10,7 @@ import dbs.kursach.rest.repositories.neo4j.BooleanRuleRepository;
 import dbs.kursach.rest.repositories.neo4j.CompoundRuleRepository;
 import dbs.kursach.rest.repositories.neo4j.ConditionRepository;
 import dbs.kursach.rest.repositories.mongo.RuleRepository;
+import dbs.kursach.rest.repositories.neo4j.MongoRuleRepository;
 import org.neo4j.driver.v1.exceptions.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -25,18 +26,18 @@ public class CompoundRuleController {
 
     private final CompoundRuleRepository compoundRuleRepository;
     private final ConditionRepository conditionRepository;
-    private final RuleRepository ruleRepository;
+    private final MongoRuleRepository mongoRuleRepository;
     private final BooleanRuleRepository booleanRuleRepository;
 
     @Autowired
     CompoundRuleController(
             ConditionRepository conditionRepository,
             CompoundRuleRepository compoundRuleRepository,
-            RuleRepository ruleRepository,
+            MongoRuleRepository mongoRuleRepository,
             BooleanRuleRepository booleanRuleRepository) {
         this.conditionRepository = conditionRepository;
         this.compoundRuleRepository = compoundRuleRepository;
-        this.ruleRepository = ruleRepository;
+        this.mongoRuleRepository = mongoRuleRepository;
         this.booleanRuleRepository = booleanRuleRepository;
     }
 
@@ -45,7 +46,7 @@ public class CompoundRuleController {
             return this.compoundRuleRepository.save((CompoundRule)cond);
         } else if (cond instanceof MongoRule) {
             // TODO: сам разбирайся
-            this.ruleRepository.save(new Rule());
+            this.mongoRuleRepository.save((MongoRule)cond);
             return new Condition();
         } else if (cond instanceof BooleanRule) {
             return this.booleanRuleRepository.save((BooleanRule)cond);

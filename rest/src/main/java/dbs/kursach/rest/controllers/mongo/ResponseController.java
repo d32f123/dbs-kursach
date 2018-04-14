@@ -26,10 +26,10 @@ public class ResponseController  {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     ResponseEntity<?> add(@RequestBody Response response) {
-        Optional<Response> r = this.responseRepository.findByPassed(response.isPassed());
-        if (r.isPresent()) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        //Optional<Response> r = this.responseRepository.findByPassed(response.isPassed());
+        //if (r.isPresent()) {
+        //    return ResponseEntity.badRequest().body(null);
+        //}
 
         try {
             response = this.responseRepository.save(response);
